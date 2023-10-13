@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<html xmlns:th="http://www.thymleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"></html>
+<head>
+
+</head>
+<body>
+
+ <th:block th:include="@{/header.html}"></th:block>
+
+ <hr>
+    <table class="table table">
+     <thead>
+     <tr>
+      <th>글번호</th>
+      <th>제목</th>
+      <th>글쓴이</th>
+      <th>작성일자</th>
+     </tr>
+     </thead>
+     <tbody>
+     <tr th:each="board, status:${boardList}">
+     <td th:text="${board.id}"></td>
+     <td th:text="${board.subject}"></td>
+     <td th:text="${board.regdate}"></td>
+     <td th:text="${board.createdby}"></td>
+     </tr>
+     </tbody>
+ </table>
+
+ <br>
+
+ <button><a>글쓰기</a></button>
+
+<hr>
+ <th:block th:include="@{/footer.html}"></th:block>
+
+</body>
+</html>
