@@ -7,13 +7,28 @@
     <title>스프링부트 게시판, 검색, 페이징 연습</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!-- 테마 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <!-- 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 </head>
 <body>
 
         <button><a th:href="@{/board}">자유게시판</a></button>
+       <th:block th:if="${session.user == null}">
         <button><a th:href="@{/login}">로그인</a></button>
+       </th:block>
+        <th:block th:if="${session.user != null}">
+            <button><a th:href="@{/logout}">로그아웃</a></button>
+        </th:block>
         <button><a th:href="@{/}">홈가기</a></button>
+
+        <th:block th:if="${session.user != null}">
+            <p>환영합니다^^<span th:text="${session.user.userid}+님"></span></p>
+        </th:block>
 
 </body>
 </html>

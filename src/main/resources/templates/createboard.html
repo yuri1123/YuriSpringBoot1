@@ -9,29 +9,29 @@
  <th:block th:include="@{/header.html}"></th:block>
 
  <hr>
+    <form role="form" method="post" th:action="@{/createboard}">
     <table class="table table">
      <tr>
-      <th>글번호</th>
-      <td><input></td>
-     </tr>
-
-     <tr>
       <th>글제목</th>
-      <td><input></td>
+      <td><input type="text" name="subject"></td>
      </tr>
      <tr>
       <th>글내용</th>
-      <td><input></td>
+      <td><textarea name="content"></textarea></td>
      </tr>
+<!--     <tr>-->
+<!--      <th>글제목</th>-->
+<!--      <td><input type="text" th:value="subject"></td>-->
+<!--     </tr>-->
+
+     <input type="hidden" name="createdby" th:value="${session.user.userid}">
+     <input type="hidden" name="modifiedby" th:value="${session.user.userid}">
+
      <tr>
-      <th>작성자</th>
-      <td><input></td>
-     </tr>
-     <tr>
-      <th>작성일자</th>
-      <td><input></td>
+      <td><button type="submit">작성완료</button></td>
      </tr>
  </table>
+    </form>
 
  <br>
  <button><a>홈가기</a></button>

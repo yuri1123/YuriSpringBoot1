@@ -9,7 +9,7 @@
  <th:block th:include="@{/header.html}"></th:block>
 
  <hr>
-    <table class="table table">
+    <table class="table text-center">
      <thead>
      <tr>
       <th>글번호</th>
@@ -30,7 +30,7 @@
 
  <br>
 
- <button><a>글쓰기</a></button>
+ <button><a th:href="@{/write}">글쓰기</a></button>
 
 <hr>
  <th:block th:include="@{/footer.html}"></th:block>
