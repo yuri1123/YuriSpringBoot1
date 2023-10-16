@@ -34,9 +34,12 @@
  </table>
 
  <br>
- <button><a>글수정하기</a></button>
- <button><a>글삭제하기</a></button>
- <button><a>홈가기</a></button>
+ <button><a th:href="@{'/updateboard/'+${board.id}}">글수정하기</a></button>
+
+ <form role="form" method="post" th:action="@{'/deleteboard/'+${board.id}}">
+  <input type="hidden" th:value="${board.id}" name="id">
+ <button type="submit">글삭제하기</button>
+ </form>
 <hr>
  <th:block th:include="@{/footer.html}"></th:block>
 

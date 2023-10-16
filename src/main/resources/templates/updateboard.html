@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+<html xmlns:th="http://www.thymleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"></html>
+<head>
+
+</head>
+<body>
+
+<th:block th:include="@{/header.html}"></th:block>
+
+<hr>
+<form role="form" method="post" th:action="@{'/updateboard/'+${board.id}}">
+    <table class="table table">
+        <tr>
+            <th>글번호</th>
+            <td>[[${board.id}]]</td>
+        </tr>
+
+        <tr>
+            <th>글제목</th>
+            <td><input name="subject" th:value="${board.subject}"></td>
+        </tr>
+        <tr>
+            <th>글내용</th>
+            <td><input name="content" th:value="${board.content}"></td>
+        </tr>
+        <tr>
+            <th>작성자</th>
+            <td>[[${board.createdby}]]</td>
+        </tr>
+        <tr>
+            <th>작성일자</th>
+            <td>[[${board.regdate}]]</td>
+        </tr>
+        <input type="hidden" name="modifiedby" th:value="${session.user.userid}">
+    </table>
+
+    <br>
+    <button type="submit"><a>수정완료</a></button>
+</form>
+
+<hr>
+<th:block th:include="@{/footer.html}"></th:block>
+
+</body>
+</html>

@@ -5,6 +5,7 @@ import com.yuls.yspringboot1.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,6 +56,34 @@ public class BoardController {
             model.addAttribute("board", boardDto);
         }
     return "boardview";
+    }
+
+    //게시글 수정 페이지 가기
+    @GetMapping("/updateboard/{id}")
+    public String updateboard(@PathVariable("id") Long id, BoardDto boardDto, Model model){
+        boardDto = boardService.selectbyid(id);
+        if(boardDto != null) {
+            model.addAttribute("board", boardDto);
+        }
+        return "updateboard";
+    }
+
+    //게시글 수정
+    @PostMapping("/updateboard/{id}")
+    public String updateboarddo(@PathVariable("id") Long id,BoardDto boardDto){
+        if(boardDto != null) {
+            int result = boardService.update(boardDto);
+        }
+        return "reidrect:/board";
+    }
+
+    //게시글 삭제
+    @PostMapping("/deleteboard/{id}")
+    public String deleteboard(@PathVariable("id") Long id){
+        if(id != null) {
+            int result = boardService.deleteboard(id);
+        }
+        return "redirect:/board";
     }
 
 }
