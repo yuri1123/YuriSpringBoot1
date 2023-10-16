@@ -21,7 +21,7 @@
      <tbody>
      <tr th:each="board, status:${boardList}">
      <td th:text="${board.id}"></td>
-     <td th:text="${board.subject}"></td>
+     <td><a th:href="@{'/boardview/'+${board.id}}" th:text="${board.subject}"></a></td>
      <td th:text="${board.regdate}"></td>
      <td th:text="${board.createdby}"></td>
      </tr>
@@ -29,9 +29,9 @@
  </table>
 
  <br>
-
+ <th:block th:if="${session.user != null}">
  <button><a th:href="@{/write}">글쓰기</a></button>
-
+ </th:block>
 <hr>
  <th:block th:include="@{/footer.html}"></th:block>
 

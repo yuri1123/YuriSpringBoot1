@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -44,6 +45,16 @@ public class BoardController {
 //        model.addAttribute("boardList", boardList);
 
         return "redirect:/board";
+    }
+
+    //게시글 보기
+    @GetMapping("/boardview/{id}")
+    public String boardview(@PathVariable("id") Long id, BoardDto boardDto, Model model){
+        boardDto = boardService.selectbyid(id);
+        if(boardDto != null) {
+            model.addAttribute("board", boardDto);
+        }
+    return "boardview";
     }
 
 }
