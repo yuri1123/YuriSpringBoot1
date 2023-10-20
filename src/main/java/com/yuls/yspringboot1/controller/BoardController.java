@@ -1,14 +1,13 @@
 package com.yuls.yspringboot1.controller;
 
 import com.yuls.yspringboot1.dto.BoardDto;
+import com.yuls.yspringboot1.dto.PagingResponse;
+import com.yuls.yspringboot1.dto.SearchDto;
 import com.yuls.yspringboot1.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,11 +19,12 @@ public class BoardController {
 
     //게시판 리스트 페이지 가기
     @GetMapping("/board")
-    public String goboard(Model model){
+    public String goboard(Model model, @ModelAttribute("params") final SearchDto params){
         System.out.println("게시판으로 가는 길");
-        List<BoardDto> boardList = boardService.selectboard();
-//        System.out.println(boardList);
-        model.addAttribute("boardList",boardList);
+        PagingResponse<BoardDto> response = boardService.findAllPost(params);
+//        List<BoardDto> boardList = boardService.selectboard(params);
+        System.out.println(response);
+        model.addAttribute("response",response);
 
         return "board";
     }

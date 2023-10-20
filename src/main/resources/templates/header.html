@@ -17,18 +17,18 @@
 </head>
 <body>
 
-        <button><a th:href="@{/board}">자유게시판</a></button>
-       <th:block th:if="${session.user == null}">
-        <button><a th:href="@{/login}">로그인</a></button>
-       </th:block>
-        <th:block th:if="${session.user != null}">
-            <button><a th:href="@{/logout}">로그아웃</a></button>
-        </th:block>
-        <button><a th:href="@{/}">홈가기</a></button>
-
-        <th:block th:if="${session.user != null}">
-            <p>환영합니다^^<span th:text="${session.user.userid}+님"></span></p>
-        </th:block>
+<div class="container">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-xl-7 justify-content-end">
+                <button class="btn"><a th:href="@{/board}">자유게시판</a></button>
+                <button class="btn" th:if="${session.user == null}"><a th:href="@{/login}">로그인</a></button>
+                <button class="btn " th:if="${session.user != null}"><a th:href="@{/logout}">로그아웃</a></button>
+                <button class="btn "><a th:href="@{/}">홈가기</a></button>
+                <span th:if="${session.user != null}" th:text="${session.user.userid}+님+'^^,'+환영합니다"></span>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
