@@ -18,36 +18,36 @@ public class BoardService {
     @Autowired
     private BoardDao boardDao;
 
-    public int create(BoardDto boardDto){
+    public int create(BoardDto boardDto) {
         return boardDao.create(boardDto);
     }
 
-    public int update(BoardDto boardDto){
+    public int update(BoardDto boardDto) {
         return boardDao.update(boardDto);
     }
 
-    public List<BoardDto> selectboard(SearchDto params){
+    public List<BoardDto> selectboard(SearchDto params) {
         return boardDao.selectboard(params);
     }
 
-    public int countboard(SearchDto params){return boardDao.countboard(params);}
-
-    public BoardDto selectbyid(Long id){
+    public BoardDto selectbyid(Long id) {
         return boardDao.selectbyid(id);
     }
 
-    public int deleteboard(Long id){
+    public int deleteboard(Long id) {
         return boardDao.delete(id);
     }
 
     //게시글 리스트 조회
-    public PagingResponse<BoardDto> findAllPost(final SearchDto params){
+//    * @param params - search conditions
+//    * @return list & pagination information
+    public PagingResponse<BoardDto> findAllPost(SearchDto params) {
         // 조건에 해당하는 데이터가 없는 경우, 응답 데이터에 비어있는 리스트와 null을 담아 반환
-        int count = boardDao.countboard(params);
+        int count = boardDao.count(params);
         if (count < 1) {
             return new PagingResponse<>(Collections.emptyList(), null);
         }
-
+        System.out.println(count);
         // Pagination 객체를 생성해서 페이지 정보 계산 후 SearchDto 타입의 객체인 params에 계산된 페이지 정보 저장
         Pagination pagination = new Pagination(count, params);
         params.setPagination(pagination);

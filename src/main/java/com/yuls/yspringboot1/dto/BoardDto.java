@@ -9,8 +9,9 @@ public class BoardDto {
     private String moddate;
     private String createdby;
     private String modifiedby;
+    private int delete_yn;
 
-    public BoardDto(Long id, String subject, String content, String regdate, String moddate, String createdby, String modifiedby) {
+    public BoardDto(Long id, String subject, String content, String regdate, String moddate, String createdby, String modifiedby, int delete_yn) {
         this.id = id;
         this.subject = subject;
         this.content = content;
@@ -18,6 +19,7 @@ public class BoardDto {
         this.moddate = moddate;
         this.createdby = createdby;
         this.modifiedby = modifiedby;
+        this.delete_yn = delete_yn;
     }
 
     public Long getId() {
@@ -76,6 +78,14 @@ public class BoardDto {
         this.modifiedby = modifiedby;
     }
 
+    public int getDelete_yn() {
+        return delete_yn;
+    }
+
+    public void setDelete_yn(int delete_yn) {
+        this.delete_yn = delete_yn;
+    }
+
     @Override
     public String toString() {
         return "BoardDto{" +
@@ -86,6 +96,7 @@ public class BoardDto {
                 ", moddate='" + moddate + '\'' +
                 ", createdby='" + createdby + '\'' +
                 ", modifiedby='" + modifiedby + '\'' +
+                ", delete_yn=" + delete_yn +
                 '}';
     }
 }

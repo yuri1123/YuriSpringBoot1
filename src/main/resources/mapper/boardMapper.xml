@@ -8,30 +8,30 @@
 
     <!-- 게시글 검색 -->
     <sql id="search">
-        <!-- 검색키워드 있을 때 -->
+        <!-- 검색 키워드가 있을 때 -->
         <if test="keyword != null and keyword != ''">
-            AND (
             <choose>
-                <!-- 검색 유형이 'subject'일 때 -->
-                <when test="searchType != null and searchType == 'subject'">
-                    subject LIKE CONCAT('%', #{keyword}, '%')
+                <!-- 검색 유형이 있을 때 -->
+                <when test="searchType != null and searchType != ''">
+                    <choose>
+                        <when test="'subject'.equals(searchType)">
+                            AND subject LIKE CONCAT('%',#{keyword},'%')
+                        </when>
+                        <when test="'content'.equals(searchType)">
+                            AND content LIKE CONCAT('%',#{keyword},'%')
+                        </when>
+                        <when test="'createdby'.equals(searchType)">
+                            AND createdby LIKE CONCAT('%',#{keyword},'%')
+                        </when>
+                    </choose>
                 </when>
-                <!-- 검색 유형이 'content'일 때 -->
-                <when test="searchType != null and searchType == 'content'">
-                    content LIKE CONCAT('%', #{keyword}, '%')
-                </when>
-                <!-- 검색 유형이 'createdby'일 때 -->
-                <when test="searchType != null and searchType == 'createdby'">
-                    createdby LIKE CONCAT('%', #{keyword}, '%')
-                </when>
-                <!-- 기본적으로 전체 검색 -->
+
+                <!-- 전체 검색일 때 -->
                 <otherwise>
-                    (subject LIKE CONCAT('%', #{keyword}, '%')
-                    OR content LIKE CONCAT('%', #{keyword}, '%')
-                    OR createdby LIKE CONCAT('%', #{keyword}, '%'))
+                    AND(subject LIKE CONCAT('%', #{keyword}, '%') OR content LIKE CONCAT('%', #{keyword}, '%') OR
+                    createdby LIKE CONCAT('%', #{keyword}, '%'))
                 </otherwise>
             </choose>
-            )
         </if>
     </sql>
 
@@ -48,14 +48,11 @@
     <!-- 게시글 전체 조회 -->
     <!-- offset은 SearchDto 클래스의 getOffset() 메서드 리턴값, 조회기준값-->
     <select id="selectboard" parameterType="SearchDto" resultType="BoardDto">
-        select * from board
-        <include refid="search"/>
-        order by id desc limit #{pagination.limitStart}, #{recordSize}
+        select * from board where delete_yn = 0 <include refid="search"></include> order by id desc limit #{pagination.limitStart},
+        #{recordSize}
     </select>
-    <!-- 게시글 수 카운팅 -->
     <select id="count" parameterType="SearchDto" resultType="java.lang.Integer">
-        select count(*) from board
-        <include refid="search"/>
+        select count(*) from board where delete_yn = 0 <include refid="search"></include>
     </select>
 
     <!-- 게시글 조회 by id -->

@@ -27,7 +27,7 @@ public class BoardDao {
         return sqlSession.selectList(namespace+".selectboard",params);
     }
 
-    public int countboard(SearchDto params){
+    public int count(SearchDto params){
         return sqlSession.selectOne(namespace+".count",params);}
 
     public BoardDto selectbyid(Long id){
