@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class BoardController {
@@ -49,8 +51,8 @@ public class BoardController {
     }
 
     //게시글 보기
-    @GetMapping("/boardview/{id}")
-    public String boardview(@PathVariable("id") Long id, BoardDto boardDto, Model model){
+    @GetMapping("/boardview/")
+    public String boardview(@RequestParam final Long id,final SearchDto queryParams, BoardDto boardDto, Model model){
         boardDto = boardService.selectbyid(id);
         if(boardDto != null) {
             model.addAttribute("board", boardDto);
@@ -59,8 +61,8 @@ public class BoardController {
     }
 
     //게시글 수정 페이지 가기
-    @GetMapping("/updateboard/{id}")
-    public String updateboard(@PathVariable("id") Long id, BoardDto boardDto, Model model){
+    @GetMapping("/updateboard/")
+    public String updateboard(@RequestParam final Long id, BoardDto boardDto, Model model){
         boardDto = boardService.selectbyid(id);
         if(boardDto != null) {
             model.addAttribute("board", boardDto);
@@ -77,12 +79,22 @@ public class BoardController {
         return "reidrect:/board";
     }
 
+    // 쿼리 스트링 파라미터를 Map에 담아 반환
+    private Map<String, Object> queryParamsToMap(final SearchDto queryParams) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("page", queryParams.getPage());
+        data.put("recordSize", queryParams.getRecordSize());
+        data.put("pageSize", queryParams.getPageSize());
+        data.put("keyword", queryParams.getKeyword());
+        data.put("searchType", queryParams.getSearchType());
+        return data;
+    }
+
     //게시글 삭제
-    @PostMapping("/deleteboard/{id}")
-    public String deleteboard(@PathVariable("id") Long id){
-        if(id != null) {
-            int result = boardService.deleteboard(id);
-        }
+    @PostMapping("/deleteboard/")
+    public String deleteboard(@RequestParam final Long id,final SearchDto queryParams, Model model){
+            boardService.deleteboard(id);
+
         return "redirect:/board";
     }
 

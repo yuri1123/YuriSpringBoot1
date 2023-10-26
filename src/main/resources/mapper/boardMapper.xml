@@ -57,7 +57,7 @@
 
     <!-- 게시글 조회 by id -->
     <select id="selectbyid" parameterType="java.lang.Long" resultType="BoardDto">
-        select * from board where id=#{id}
+        select * from board where delete_yn = 0 and id=#{id}
     </select>
     <!-- 게시글 삭제 -->
     <delete id="deleteboard" parameterType="java.lang.Long">

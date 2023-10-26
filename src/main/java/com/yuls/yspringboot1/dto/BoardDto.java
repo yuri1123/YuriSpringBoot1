@@ -9,9 +9,9 @@ public class BoardDto {
     private String moddate;
     private String createdby;
     private String modifiedby;
-    private int delete_yn;
+    private Integer delete_yn;
 
-    public BoardDto(Long id, String subject, String content, String regdate, String moddate, String createdby, String modifiedby, int delete_yn) {
+    public BoardDto(Long id, String subject, String content, String regdate, String moddate, String createdby, String modifiedby, Integer delete_yn) {
         this.id = id;
         this.subject = subject;
         this.content = content;

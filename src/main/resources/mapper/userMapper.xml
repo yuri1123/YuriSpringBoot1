@@ -8,8 +8,8 @@
 
     <!-- 유저 회원가입 -->
     <insert id="createuser" parameterType="UserDto">
-        insert into User(userid,password,email,nickname,regdate,moddate,createdby,modifiedby)
-        values (#{userid},#{password},#{email},#{nickname},now(),now(),#{createdby},#{modifiedby})
+        insert into User(userid,password,email,nickname,regdate,moddate)
+        values (#{userid},#{password},#{email},#{nickname},now(),now())
     </insert>
     <!-- 유저 회원정보 수정 -->
     <update id="updateuser" parameterType="UserDto">
