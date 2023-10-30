@@ -2,41 +2,56 @@
 <html lang="ko">
 <html xmlns:th="http://www.thymleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"></html>
 <head>
+    <style>
+        .new_input {
+            width: 80%;
+            border: 1px solid #bbb;
+            border-radius: 8px;
+            padding: 10px 15px 12px 15px;
+            font-size: 14px;
+        }
+    </style>
+
 
 </head>
 <body>
 
- <th:block th:include="@{/header.html}"></th:block>
+<th:block th:include="@{/header.html}"></th:block>
 
- <hr>
-    <form role="form" method="post" th:action="@{/createboard}">
-    <table class="table table">
-     <tr>
-      <th>글제목</th>
-      <td><input type="text" name="subject"></td>
-     </tr>
-     <tr>
-      <th>글내용</th>
-      <td><textarea name="content"></textarea></td>
-     </tr>
-<!--     <tr>-->
-<!--      <th>글제목</th>-->
-<!--      <td><input type="text" th:value="subject"></td>-->
-<!--     </tr>-->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+            <h1>새 글쓰기</h1>
+            <form role="form" method="post" th:action="@{/createboard}">
+                <table class="table text-center table-bordered border-primary">
+                    <colgroup>
+                        <col style="width: 30%;">
+                        <col style="width: 70%; ">
+                    </colgroup>
+                    <tr>
+                        <th class="text-right">글제목</th>
+                        <td class="text-left"> <input class="new_input" type="text" name="subject"></td>
+                    </tr>
+                    <tr>
+                        <th class="text-right">글내용</th>
+                        <td class="text-left"><textarea class="new_input" style="height: 250px" name="content"></textarea></td>
+                    </tr>
+                </table>
+                <input type="hidden" name="createdby" th:value="${session.user.userid}">
+                <input type="hidden" name="modifiedby" th:value="${session.user.userid}">
 
-     <input type="hidden" name="createdby" th:value="${session.user.userid}">
-     <input type="hidden" name="modifiedby" th:value="${session.user.userid}">
+                <p class="btn_set text-center">
+                    <button type="submit"><a>작성완료</a></button>
+                    <button type="button"><a th:href="@{/board}">전체글보기</a></button>
+                </p>
+            </form>
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+</div>
 
-     <tr>
-      <td><button type="submit">작성완료</button></td>
-     </tr>
- </table>
-    </form>
-
- <br>
- <button><a>홈가기</a></button>
-<hr>
- <th:block th:include="@{/footer.html}"></th:block>
+<th:block th:include="@{/footer.html}"></th:block>
 
 </body>
 </html>

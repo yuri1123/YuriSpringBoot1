@@ -7,44 +7,48 @@
 <body>
 
 <th:block th:include="@{/header.html}"></th:block>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+            <h1>[[${board.subject}]]<span style="font-size:14px;"> 👁️ 조회수 : [[${board.viewcount}]]</span></h1>
 
-<hr>
-<table class="table table">
-    <tr>
-        <th>글번호</th>
-        <td>[[${board.id}]]</td>
-    </tr>
+            <table class="table text-center table-bordered border-primary">
+                <colgroup>
+                    <col style="width: 30%;">
+                    <col style="width: 70%; ">
+                </colgroup>
+                <tr>
+                    <th class="text-right">글번호</th>
+                    <td class="text-left" style="padding-left:10px;">[[${board.id}]]</td>
+                </tr>
 
-    <tr>
-        <th>글제목</th>
-        <td>[[${board.subject}]]</td>
-    </tr>
-    <tr>
-        <th>글내용</th>
-        <td>[[${board.content}]]</td>
-    </tr>
-    <tr>
-        <th>작성자</th>
-        <td>[[${board.createdby}]]</td>
-    </tr>
-    <tr>
-        <th>작성일자</th>
-        <td>[[${board.regdate}]]</td>
-    </tr>
-</table>
-
-<br>
-
-<p class="btn_set">
-    <!--    <button type="button" class="btns btn_bdr4 btn_mid"><a th:href="@{'/updateboard/'+${board.id}}">수정</a></button>-->
-    <!--<form role="form" method="post" th:action="@{'/deleteboard/'+${board.id}}">-->
-    <!--    <input type="hidden" th:value="${board.id}" name="id">-->
-    <!--    <button type="submit" class="btns btn_bdr1 btn_mid">글삭제하기</button>-->
-    <!--</form>-->
-    <button type="button" onclick="goWritePage();" class="btns btn_bdr3 btn_mid">수정</button>
-    <button type="button" onclick="deletePost();" class="btns btn_bdr3 btn_mid">삭제</button>
-    <button type="button" onclick="goListPage();" class="btns btn_bdr3 btn_mid">뒤로</button>
-</p>
+                <tr>
+                    <th class="text-right">글제목</th>
+                    <td class="text-left" style="padding-left:10px;">[[${board.subject}]]</td>
+                </tr>
+                <tr>
+                    <th class="text-right">글내용</th>
+                    <td class="text-left" style="height: 300px; padding-left:10px">[[${board.content}]]</td>
+                </tr>
+                <tr>
+                    <th class="text-right">작성자</th>
+                    <td class="text-left" style="padding-left:10px;">[[${board.createdby}]]</td>
+                </tr>
+                <tr>
+                    <th class="text-right" >작성일자</th>
+                    <td class="text-left" style="padding-left:10px;">[[${board.regdate}]]</td>
+                </tr>
+            </table>
+            <p class="btn_set text-center">
+                <button type="button" onclick="goWritePage();" class="btns btn_bdr3 btn_mid">수정</button>
+                <button type="button" onclick="deletePost();" class="btns btn_bdr3 btn_mid">삭제</button>
+                <button type="button" onclick="goListPage();" class="btns btn_bdr3 btn_mid">뒤로</button>
+            </p>
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+</div>
 
 <script>
     // 게시글 수정 페이지로 이동
