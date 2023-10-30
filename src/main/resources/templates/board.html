@@ -230,6 +230,16 @@
 <th:block th:include="@{/header.html}"></th:block>
 
 <hr>
+<th:block th:if="${data != null and #strings.length(data.message) != 0}">
+    <script>
+        top.alert("[[${data.message}]]");
+    </script>
+</th:block>
+<th:block th:if="${data != null and #strings.length(data.message) != 0}">
+    <script>
+        top.location.href = '[[${data.href}]]';
+    </script>
+</th:block>
 
 <!-- 검색창-->
 <div class="container">
@@ -259,8 +269,8 @@
                 </div>
                 <div class="col-sm-2 text-right">
                     <div class="text-right">
-                        <button class="search_button"><a th:if="${session.user != null}"
-                                                         th:href="@{/write}">새글쓰기</a></button>
+<!--                        th:if="${session.user != null}"-->
+                        <button class="search_button"><a th:href="@{/write}">새글쓰기</a></button>
                     </div>
                 </div>
             </div>
