@@ -50,13 +50,16 @@ public class BoardController {
         return "redirect:/board";
     }
 
-    //게시글 보기
+    //게시글 보기(id로 게시물 조회)
     @GetMapping("/boardview/")
     public String boardview(@RequestParam final Long id,final SearchDto queryParams, BoardDto boardDto, Model model){
+        //게시물 조회
         boardDto = boardService.selectbyid(id);
         if(boardDto != null) {
             model.addAttribute("board", boardDto);
         }
+        //게시물 viewcnt +1
+        int result = boardService.updateviewcnt(id);
     return "boardview";
     }
 

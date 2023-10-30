@@ -7,17 +7,19 @@ public class Board extends BaseEntity {
     private String content;
     private int delete_yn;
 
+    private int viewcount;
 
     public Board(String regdate, String moddate, String createdby, String modifiedby) {
         super(regdate, moddate, createdby, modifiedby);
     }
 
-    public Board(String regdate, String moddate, String createdby, String modifiedby, Long id, String subject, String content, int delete_yn) {
+    public Board(String regdate, String moddate, String createdby, String modifiedby, Long id, String subject, String content, int delete_yn, int viewcount) {
         super(regdate, moddate, createdby, modifiedby);
         this.id = id;
         this.subject = subject;
         this.content = content;
         this.delete_yn = delete_yn;
+        this.viewcount = viewcount;
     }
 
     public int getDelete_yn() {
@@ -53,6 +55,14 @@ public class Board extends BaseEntity {
         this.delete_yn = delete_yn;
     }
 
+    public int getViewcount() {
+        return viewcount;
+    }
+
+    public void setViewcount(int viewcount) {
+        this.viewcount = viewcount;
+    }
+
     @Override
     public String toString() {
         return "Board{" +
@@ -60,6 +70,7 @@ public class Board extends BaseEntity {
                 ", subject='" + subject + '\'' +
                 ", content='" + content + '\'' +
                 ", delete_yn=" + delete_yn +
+                ", viewcount=" + viewcount +
                 '}';
     }
 }

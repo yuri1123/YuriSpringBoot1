@@ -16,31 +16,36 @@ import java.util.List;
 public class BoardService {
 
     @Autowired
+
+    //BoardDao 인스턴스 생성
     private BoardDao boardDao;
 
+    //게시물 생성
     public int create(BoardDto boardDto) {
         return boardDao.create(boardDto);
     }
-
+    //게시물 수정
     public int update(BoardDto boardDto) {
         return boardDao.update(boardDto);
     }
-
+    //게시물 전체 조회
     public List<BoardDto> selectboard(SearchDto params) {
         return boardDao.selectboard(params);
     }
-
+    //게시물 id로 조회
     public BoardDto selectbyid(Long id) {
         return boardDao.selectbyid(id);
     }
-
+    //게시물 조회수 +1
+    public int updateviewcnt(Long id){return boardDao.updateviewcnt(id);}
+    //게시물 삭제
     public int deleteboard(Long id) {
         return boardDao.delete(id);
     }
 
-    //게시글 리스트 조회
-//    * @param params - search conditions
-//    * @return list & pagination information
+    //게시글 리스트 조회(페이징,검색)
+    //    * @param params - search conditions
+    //    * @return list & pagination information
     public PagingResponse<BoardDto> findAllPost(SearchDto params) {
         // 조건에 해당하는 데이터가 없는 경우, 응답 데이터에 비어있는 리스트와 null을 담아 반환
         int count = boardDao.count(params);

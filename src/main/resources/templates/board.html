@@ -84,6 +84,7 @@
                             <td class="tl"><a href="javascript:void(0);" onclick="goViewPage(${row.id});">${row.subject}</a></td>
                             <td>${row.createdby}</td>
                             <td>${dayjs(row.regdate).format('YYYY-MM-DD HH:mm')}</td>
+                            <td>${row.viewcount}</td>
                         </tr>
                     `;
             })
@@ -213,19 +214,14 @@
             <table class="table text-center">
                 <thead class="text-center">
                 <tr class="text-center">
-                    <th>글번호</th>
-                    <th>제목</th>
-                    <th>글쓴이</th>
-                    <th>작성일자</th>
+                    <th class="text-center">글번호</th>
+                    <th class="text-center">제목</th>
+                    <th class="text-center">글쓴이</th>
+                    <th class="text-center">작성일자</th>
+                    <th class="text-center">조회수</th>
                 </tr>
                 </thead>
                 <tbody id="list">
-                <!--                <tr class="text-center" th:each="board, status:${boardList}">-->
-                <!--                    <td th:text="${board.id}"></td>-->
-                <!--                    <td><a th:href="@{'/boardview/'+${board.id}}" th:text="${board.subject}"></a></td>-->
-                <!--                    <td th:text="${board.regdate}"></td>-->
-                <!--                    <td th:text="${board.createdby}"></td>-->
-                <!--                </tr>-->
                 </tbody>
             </table>
             <div class="col-2">
@@ -235,15 +231,6 @@
         <!-- 페이징-->
         <div class="paging text-center" aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
-<!--                <li class="page-item disabled">-->
-<!--                    <a class="page-link">이전</a>-->
-<!--                </li>-->
-<!--                <li class="page-item"><a class="page-link" href="#">1</a></li>-->
-<!--                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
-<!--                <li class="page-item"><a class="page-link" href="#">3</a></li>-->
-<!--                <li class="page-item">-->
-<!--                    <a class="page-link" href="#">다음</a>-->
-<!--                </li>-->
             </ul>
 
 

@@ -37,8 +37,8 @@
 
     <!-- 게시글 등록 -->
     <insert id="createboard" parameterType="BoardDto">
-        insert into board(subject,content,regdate,moddate,createdby,modifiedby)
-        values (#{subject},#{content},now(),now(),#{createdby},#{modifiedby})
+        insert into board(subject,content,regdate,moddate,createdby,modifiedby,viewcount)
+        values (#{subject},#{content},now(),now(),#{createdby},#{modifiedby},0)
     </insert>
     <!-- 게시글 수정 -->
     <update id="updateboard" parameterType="BoardDto">
@@ -51,6 +51,7 @@
         select * from board where delete_yn = 0 <include refid="search"></include> order by id desc limit #{pagination.limitStart},
         #{recordSize}
     </select>
+    <!-- 게시물 갯수 카운트 -->
     <select id="count" parameterType="SearchDto" resultType="java.lang.Integer">
         select count(*) from board where delete_yn = 0 <include refid="search"></include>
     </select>
@@ -59,6 +60,10 @@
     <select id="selectbyid" parameterType="java.lang.Long" resultType="BoardDto">
         select * from board where delete_yn = 0 and id=#{id}
     </select>
+    <!-- 게시물 조회뷰 +1 -->
+    <update id="updateviewcnt" parameterType="java.lang.Long">
+            update board set viewcount = viewcount +1 where id=#{id}
+    </update>
     <!-- 게시글 삭제 -->
     <delete id="deleteboard" parameterType="java.lang.Long">
         delete from board where id=#{id}

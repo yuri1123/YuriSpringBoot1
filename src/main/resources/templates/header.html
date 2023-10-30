@@ -53,7 +53,7 @@
                 <button class="btn" th:if="${session.user == null}"><a th:href="@{/login}">로그인</a></button>
                 <button class="btn " th:if="${session.user != null}"><a th:href="@{/logout}">로그아웃</a></button>
                 <button class="btn "><a th:href="@{/}">홈가기</a></button>
-                <span th:if="${session.user != null}" th:text="${session.user.userid}+님+'^^,'+환영합니다"></span>
+                <span th:if="${session.user != null}" th:text="'[ '+${session.user.userid}+님+'^^,'+환영합니다+' ]'"></span>
         </div>
     </div>
 </div>
