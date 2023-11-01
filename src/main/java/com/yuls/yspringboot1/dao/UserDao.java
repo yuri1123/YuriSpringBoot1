@@ -25,6 +25,7 @@ public class UserDao {
     public List<UserDto> selectuser(){
         return sqlSession.selectList(namespace+".selectuser");
     }
+    public UserDto selectbyuserid(String userid){return sqlSession.selectOne(namespace+".selectbyid",userid);}
 
     public UserDto login(UserDto userDto){
         return sqlSession.selectOne(namespace+".login",userDto);

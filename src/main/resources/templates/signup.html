@@ -61,6 +61,14 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
+
+        .new_button {
+            width: 80%;
+            border: 1px solid #bbb;
+            border-radius: 8px;
+            padding: 10px 15px 12px 15px;
+            font-size: 14px;
+        }
     </style>
 
 
@@ -88,30 +96,104 @@
                 <div class="text-center">
                     <h1 style="font-size: 45px;"> SIGN UP </h1>
                 </div>
-                <form class="form" role="form" method="post" th:action="@{/signupdo}">
+                <form class="form" role="form" method="post" th:action="@{/signupdo}" id="signupForm">
                     <div class="text-center">
-                        <input type="text" name="userid" placeholder="아이디"><br>
+                        <input type="text" name="userid" id="useridInput" placeholder="아이디" style="width: 40%" required>
+                        <span><button style="width: 10%" type="button" class="new_button"
+                                      id="checkDuplicate">중복검사</button></span><br>
+                        <script type="text/javascript">
+                            // 아이디 중복 검사 결과와 비밀번호 확인 상태를 추적하는 변수
+                            var isIdAvailable = false;
+
+                            // 중복 검사 버튼 클릭 시 실행
+                            document.getElementById("checkDuplicate").addEventListener("click", function () {
+                                var userid = document.getElementById("useridInput").value;
+
+                                // AJAX 요청 보내기 (중복 검사)
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/signup/idcheck",
+                                    data: {userid: userid},
+                                    success: function (response) {
+                                        if (response == 1) {
+                                            alert("중복된 아이디입니다. 다른 아이디를 입력해주세요.");
+                                            isIdAvailable = false;
+                                        } else if (response == 0) {
+                                            alert("사용가능한 아이디입니다.");
+                                            isIdAvailable = true;
+                                        }
+                                    },
+                                    error: function () {
+                                        alert("서버 요청 중 오류가 발생했습니다.");
+                                        isIdAvailable = false;
+                                    }
+                                });
+                            });
+
+                        </script>
                         <input type="password" style="margin-top:10px; margin-bottom:10px;" name="password"
-                               placeholder="비밀번호">
+                               placeholder="비밀번호" id="password" required>
                         <input type="password" style="margin-top:10px; margin-bottom:10px;" name="password1"
-                               placeholder="비밀번호확인">
+                               placeholder="비밀번호확인" id="passwordConfirm"><br>
+                        <h id="confirmMsg" class="text-left"></h>
+                        <br>
+                        <script type="text/javascript">
+                            var isPasswordConfirmed = false;
+
+                            // 비밀번호 확인 함수
+                            function passConfirm() {
+                                var password = document.getElementById('password');
+                                var passwordConfirm = document.getElementById('passwordConfirm');
+                                var confirmMsg = document.getElementById('confirmMsg');
+                                var correctColor = "rgba(1,232,121,0.7)";
+                                var wrongColor = "#f85959";
+
+                                if (password.value == passwordConfirm.value) {
+                                    confirmMsg.style.color = correctColor;
+                                    confirmMsg.innerHTML = "비밀번호가 일치합니다.";
+                                    isPasswordConfirmed = true;
+                                } else {
+                                    confirmMsg.style.color = wrongColor;
+                                    confirmMsg.innerHTML = "비밀번호 일치하지 않습니다.";
+                                    isPasswordConfirmed = false;
+                                }
+                            }
+
+                            // 비밀번호와 비밀번호 확인 입력 필드에 input 이벤트 핸들러 추가
+                            document.getElementById('password').addEventListener('input', passConfirm);
+                            document.getElementById('passwordConfirm').addEventListener('input', passConfirm);
+                        </script>
+
+
                         <input type="email" style="margin-top:10px; margin-bottom:10px;" name="email"
-                               placeholder="이메일">
+                               placeholder="이메일" required>
                         <input type="text" style="margin-top:10px; margin-bottom:10px;" name="nickname"
-                               placeholder="닉네임">
-<!--                        <input type="hidden" name="createdby" th:value="${session.user.userid}">-->
-<!--                        <input type="hidden" name="modifiedby" th:value="${session.user.userid}">-->
+                               placeholder="닉네임" required>
                     </div>
                     <div class="text-center">
-                        <button style="font-size: 18px;"
-                                class="btn button btnPush btnLightBlue" type="submit">회원가입
-                        </button>
+                        <input style="font-size: 18px;"
+                               class="btn button btnPush btnLightBlue" id="submitBtn" value="회원가입">
+                        </input>
+                        <script type="text/javascript">
+                            // 회원가입 버튼 클릭 시 실행
+                            document.getElementById("submitBtn").addEventListener("click", function () {
+                                // 아이디 중복 검사와 비밀번호 확인이 모두 통과한 경우에만 제출
+                                if (isIdAvailable && isPasswordConfirmed) {
+                                    document.getElementById("signupForm").submit();
+                                } else {
+                                    alert("아이디 중복 검사와 비밀번호 확인을 확인하세요.");
+                                }
+                            });
+                        </script>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
 </div>
+
+
 <hr>
 <th:block th:include="@{/footer.html}"></th:block>
 </body>

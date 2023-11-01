@@ -27,6 +27,7 @@ public class UserService {
     public List<UserDto> selectuser(){
         return userDao.selectuser();
     }
+    public UserDto selectbyuserid(String userid){return userDao.selectbyuserid(userid);}
 
     public UserDto login(UserDto userDto){
         return userDao.login(userDto);

@@ -40,7 +40,7 @@ public class BoardController {
         if (user == null) {
             System.out.println("로그인 정보가 없다고! ");
             // 세션 정보가 없을 때 메시지와 리디렉션 정보를 추가합니다.
-            attributes.addFlashAttribute("data", new MessageDto("접근권한이 없습니다.", "/login"));
+            attributes.addFlashAttribute("data", new MessageDto("접근권한이 없습니다.로그인이 필요합니다.", "/login"));
             return "redirect:/board"; // board 컨트롤러로 리디렉션합니다.
         } else {
             System.out.println("설마 로그인정보가 없는데 넘어가고 있니?");
@@ -64,16 +64,26 @@ public class BoardController {
 
     //게시글 보기(id로 게시물 조회)
     @GetMapping("/boardview/")
-    public String boardview(@RequestParam final Long id, final SearchDto queryParams, BoardDto boardDto, Model model) {
-        //게시물 조회
-        boardDto = boardService.selectbyid(id);
-        if (boardDto != null) {
-            model.addAttribute("board", boardDto);
+    public String boardview(@RequestParam final Long id, final SearchDto queryParams, BoardDto boardDto,
+                            Model model, RedirectAttributes attributes, HttpSession session) {
+        //글쓰기 회원만 접근 가능 판별
+        Object user = session.getAttribute("user");
+        if (user == null) {
+            attributes.addFlashAttribute("data", new MessageDto("접근권한이 없습니다. 로그인이 필요합니다.", "/login"));
+            return "redirect:/board"; // board 컨트롤러로 리디렉션합니다.
+        } else {
+            // 세션 정보가 있는 경우 글쓰기 페이지로 이동
+
+            //게시물 조회
+            boardDto = boardService.selectbyid(id);
+            if (boardDto != null) {
+                model.addAttribute("board", boardDto);
+            }
+            //게시물 viewcnt +1
+            int result = boardService.updateviewcnt(id);
+            return "boardview";
         }
-        //게시물 viewcnt +1
-        int result = boardService.updateviewcnt(id);
-        return "boardview";
-    }
+   }
 
     //게시글 수정 페이지 가기
     @GetMapping("/updateboard/")

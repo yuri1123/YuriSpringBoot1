@@ -20,6 +20,10 @@
     <select id="selectuser" resultType="UserDto">
         select * from User
     </select>
+    <!-- id로 중복여부 확인 -->
+    <select id="selectbyid" parameterType="java.lang.String" resultType="UserDto">
+        select * from User where userid=#{userid}
+    </select>
     <!-- 유저 로그인 -->
     <select id="login" parameterType="UserDto" resultType="UserDto">
         select * from User where userid=#{userid} and password=#{password}
