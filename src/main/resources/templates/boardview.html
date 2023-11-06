@@ -3,6 +3,23 @@
 <html xmlns:th="http://www.thymleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"></html>
 <head>
 
+    <style>
+        .new_input {
+            width: 80%;
+            border: 1px solid #bbb;
+            border-radius: 8px;
+            padding: 10px 15px 12px 15px;
+            font-size: 14px;
+        }
+
+        .new_button {
+            border: 1px solid #bbb;
+            border-radius: 8px;
+            padding: 8px 15px 8px 15px;
+            font-size: 14px;
+        }
+    </style>
+
 </head>
 <body>
 
@@ -36,15 +53,41 @@
                     <td class="text-left" style="padding-left:10px;">[[${board.createdby}]]</td>
                 </tr>
                 <tr>
-                    <th class="text-right" >작성일자</th>
+                    <th class="text-right">작성일자</th>
                     <td class="text-left" style="padding-left:10px;">[[${board.regdate}]]</td>
                 </tr>
             </table>
             <p class="btn_set text-center">
-                <button type="button" onclick="goWritePage();" class="btns btn_bdr3 btn_mid">수정</button>
-                <button type="button" onclick="deletePost();" class="btns btn_bdr3 btn_mid">삭제</button>
-                <button type="button" onclick="goListPage();" class="btns btn_bdr3 btn_mid">뒤로</button>
+                <button type="button" onclick="goWritePage();" class="btns btn_bdr3 btn_mid new_button">수정</button>
+                <button type="button" onclick="deletePost();" class="btns btn_bdr3 btn_mid new_button">삭제</button>
+                <button type="button" onclick="goListPage();" class="btns btn_bdr3 btn_mid new_button">뒤로</button>
             </p>
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+            <h4>댓글보기</h4>
+            <hr>
+            <!--반복구간-->
+            <th:block th:each="list : ${replyList}" >
+            <p class="text-left" style="padding-left:10px;color: rgba(77,211,168,0.85)">[[${list.createdby}]]
+                <span style="font-size: 12px;color: #cccccc">  [[${list.regdate}]]</span></p>
+            <p class="text-left" style="height: 30px; padding-left:10px">[[${list.replycontent}]]
+                <span style="font-size: 12px;color: #cccccc" class="text-right"> 삭제 , 수정</span></p>
+            <hr>
+            </th:block>
+            <!--반복구간 end-->
+            <!--댓글쓰기 -->
+            <form style="text-align: right;" role="form" th:action="@{/createreply}" method="post">
+                <input class="text-left new_input" style="height: 100px; width: 100%; padding-left:10px"
+                       value="댓글을 입력해주세요." name="replycontent">
+                <input type="hidden" name="boardid" th:value="${board.id}">
+                <input type="hidden" name="createdby" th:value="${session.user.userid}">
+                <input type="hidden" name="modifiedby" th:value="${session.user.userid}">
+                <input class="new_button" style="margin-top:3px;" type="submit" value="댓글등록">
+            </form>
         </div>
         <div class="col-sm-1"></div>
     </div>

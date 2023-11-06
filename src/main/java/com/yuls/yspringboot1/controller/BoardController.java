@@ -2,6 +2,7 @@ package com.yuls.yspringboot1.controller;
 
 import com.yuls.yspringboot1.dto.*;
 import com.yuls.yspringboot1.service.BoardService;
+import com.yuls.yspringboot1.service.ReplyService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,8 @@ public class BoardController {
 
     @Autowired
     private BoardService boardService;
+    @Autowired
+    private ReplyService replyService;
 
     //게시판 리스트 페이지 가기
     @GetMapping("/board")
@@ -65,7 +68,7 @@ public class BoardController {
     //게시글 보기(id로 게시물 조회)
     @GetMapping("/boardview/")
     public String boardview(@RequestParam final Long id, final SearchDto queryParams, BoardDto boardDto,
-                            Model model, RedirectAttributes attributes, HttpSession session) {
+                            Model model, RedirectAttributes attributes, HttpSession session, ReplyDto replyDto) {
         //글쓰기 회원만 접근 가능 판별
         Object user = session.getAttribute("user");
         if (user == null) {
@@ -73,7 +76,6 @@ public class BoardController {
             return "redirect:/board"; // board 컨트롤러로 리디렉션합니다.
         } else {
             // 세션 정보가 있는 경우 글쓰기 페이지로 이동
-
             //게시물 조회
             boardDto = boardService.selectbyid(id);
             if (boardDto != null) {
@@ -81,9 +83,22 @@ public class BoardController {
             }
             //게시물 viewcnt +1
             int result = boardService.updateviewcnt(id);
+            //댓글 전체 조회
+           List<ReplyDto> replyList = replyService.selectReplyAll(id);
+            model.addAttribute("replyList",replyList);
             return "boardview";
+
         }
    }
+
+   //댓글쓰기
+    @PostMapping("/createreply")
+    public String replycontent(ReplyDto replyDto){
+        replyService.createReply(replyDto);
+        return "redirect:/board";
+    }
+
+
 
     //게시글 수정 페이지 가기
     @GetMapping("/updateboard/")
@@ -119,8 +134,18 @@ public class BoardController {
     @PostMapping("/deleteboard/")
     public String deleteboard(@RequestParam final Long id, final SearchDto queryParams, Model model) {
         boardService.deleteboard(id);
-
         return "redirect:/board";
     }
+
+//
+//    //댓글 생성
+//    @PostMapping("/select")
+
+
+
+
+
+
+
 
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 파일이름을 지칭하는 네임스페이스 -->
+<mapper namespace="com.yuls.yspringboot1.replyMapper">
+
+    <!-- 댓글 등록 -->
+    <insert id="createReply" parameterType="ReplyDto">
+        insert into reply(replycontent,boardid,regdate,moddate,createdby,modifiedby,deleteyn)
+        values (#{replycontent},#{boardid},now(),now(),#{createdby},#{modifiedby},0)
+    </insert>
+    <!-- 댓글 수정 -->
+    <update id="updateReply" parameterType="ReplyDto">
+        update board set replycontent=#{replycontent},moddate=now(),modifiedby=#{modifiedby}
+        where id=#{id} and boardid=#{boardid}
+    </update>
+    <!-- 댓글 전체 조회 -->
+    <select id="selectReplyAll" parameterType="java.lang.Long" resultType="ReplyDto">
+        select * from reply where deleteyn = 0 and boardid=#{boardid} order by replyid desc
+    </select>
+    <!-- 댓글 삭제 -->
+    <update id="deleteReply" parameterType="java.util.Map">
+        update board set deleteyn=1
+        where id=#{id} and boardid=#{boardid}
+    </update>
+
+
+</mapper>
